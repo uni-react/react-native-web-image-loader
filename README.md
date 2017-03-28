@@ -21,6 +21,16 @@ In your webpack config use it as a loader for images:
 ```javascript
 {
     ...,
+    resolve: {
+        ...,
+        plugins: [
+            // A resolver plugin to support image without the required name
+            // Note this is only for webpack 2
+            // For Webpack 1 use:
+            // https://github.com/psychoo118/react-native-web-image-loader/issues/1#issuecomment-289549557
+            new (require('react-native-web-image-loader').imageResolver)()
+        ],
+    },
     module: {
         loaders: [
             {

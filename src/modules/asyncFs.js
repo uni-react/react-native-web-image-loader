@@ -12,6 +12,22 @@ export const statAsync = async ( filePath: string ) => {
     })
 }
 
+export const fileExistsAsync = async ( filePath: string ) => {
+    return new Promise( ( resolve, reject ) => {
+        fs.stat( filePath, ( err, stats ) => {
+            if (err) {
+                if ( err.code === 'ENOENT' ) {
+                    resolve( false )
+                } else {
+                    reject( err )
+                }
+                return
+            }
+            resolve( stats.isFile() )
+        })
+    })
+}
+
 export const readFileAsync = async ( filePath: string ) => {
     return new Promise( ( resolve, reject ) => {
         fs.readFile( filePath, ( err, data ) => {

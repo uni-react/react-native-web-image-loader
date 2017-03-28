@@ -6,13 +6,14 @@ import ImageSizeResolver from './modules/imageSizeResolver'
 import resolveScaledImages from './modules/scaledImageResolver'
 import { readFileAsync } from './modules/asyncFs'
 import { createImageWrapper } from './modules/imageWrapper'
+import imageResolver from './plugins/imageResolver'
 import loaderUtils from 'loader-utils'
 
 const DEFAULT_IMAGE_CLASS_PATH = require.resolve( './modules/adaptiveImage' )
 const DEFAULT_IMAGE_NAME_FORMAT = '[hash].[ext]'
 const DEFAULT_SCALINGS = { '@2x': 2, '@3x': 3 }
 
-module.exports = async function( content: Buffer ) {
+async function reactNativeWebImageLoader ( content: Buffer ) {
     const callback = this.async();
     if( this.cacheable ) this.cacheable()
 
@@ -56,4 +57,6 @@ module.exports = async function( content: Buffer ) {
     callback( null, wrapper( size, result ) )
 }
 
+module.exports = reactNativeWebImageLoader
 module.exports.raw = true
+module.exports.imageResolver = imageResolver
