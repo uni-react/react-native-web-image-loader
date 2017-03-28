@@ -11,7 +11,7 @@ This is my first node.js package so every recommendation is welcome. :smile:
 Install it via npm:
 
 ```terminal
-$ npm install --save-dev react-native-web-image-loader
+$ npm install --save-dev uni-react@react-native-web-image-loader
 ```
 
 ## Usage
@@ -62,7 +62,7 @@ We have the following files:
 |--assets/
    |-- pic1.png
    |-- pic1@2x.png
-   |-- pic1-3x.png
+   |-- pic1@3x.png
 |--index.js
 ```
 
@@ -73,7 +73,7 @@ module.exports = {
     loaders: [
         {
             test: /\.(png|jpe?g|gif)$/,
-            loader: 'react-native-web-image-loader?name=[name].[ext]&scalings[@2x]=2&scalings[-3x]=3'
+            loader: 'react-native-web-image-loader?name=[name].[ext]&scalings[@2x]=2&scalings[@3x]=3'
         }
     ]
 }
