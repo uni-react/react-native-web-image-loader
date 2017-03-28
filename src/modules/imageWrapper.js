@@ -1,10 +1,6 @@
 // @flow
 
 export const createImageWrapper = ( classPath: string ) => ( size: { width: number, height: number }, images: { '@1x': string, '@2x'?: string, '@3x'?: string } ) => {
-    const uri = `${images['@1x']}`
-
-    delete images['@1x']
-
     let scalings = []
 
     for( let scaling in images ) {
@@ -12,9 +8,8 @@ export const createImageWrapper = ( classPath: string ) => ( size: { width: numb
     }
 
     return `var AdaptiveImage = require( ${classPath} );
-
 module.exports = new AdaptiveImage({
-    uri: ${uri},${scalings.join('')}
+    ${scalings.join('')}
     width: ${size.width},
     height: ${size.height}
 });`

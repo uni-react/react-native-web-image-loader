@@ -12,7 +12,7 @@ AdaptiveImage.prototype = {
             }
         }
 
-        return this.data.uri
+        return this.data['uri@1x'] || this.data['uri@2x'] || this.data['uri@3x']
     },
     get width() {
         return this.data.width
