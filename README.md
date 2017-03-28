@@ -11,7 +11,7 @@ This is my first node.js package so every recommendation is welcome. :smile:
 Install it via npm:
 
 ```terminal
-$ npm install --save-dev uni-react@react-native-web-image-loader
+$ npm install --save-dev github:uni-react/react-native-web-image-loader
 ```
 
 ## Usage
