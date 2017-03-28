@@ -2,6 +2,9 @@ import { parse, join } from 'path'
 import { fileExistsAsync } from '../modules/asyncFs'
 
 export default class ImageResolver {
+  constructor (props) {
+    this.platformSuffixes = ['', '.ios', '.android']
+  }
   apply (resolver) {
     resolver.plugin('before-new-resolve', async (request, callback) => {
       
@@ -22,19 +25,22 @@ export default class ImageResolver {
         // Find if scaled image exists
         const file = parse(filePath)
         for (let scale = 2; scale <= 3; scale++) {
-          const scaledFileName = `${file.name}@${scale}x${file.ext}`
-          const exists = await fileExistsAsync(join(file.dir, scaledFileName))
-          
-          if(exists) {
-            let result = Object.assign({}, request, {
-              request: request.request.replace(file.base, scaledFileName)
-            })
-            let parsed = resolver.parse(result.request)
-            let parsedResult = Object.assign({}, result, parsed)
-            resolver.doResolve('parsed-resolve', parsedResult, `found file: customized file`, callback)
-            return
+          for (let i = 0; i < this.platformSuffixes.length; i++) {
+            const scaledFileName = `${file.name}@${scale}x${this.platformSuffixes[i]}${file.ext}`
+            const exists = await fileExistsAsync(join(file.dir, scaledFileName))
+            
+            if(exists) {
+              let result = Object.assign({}, request, {
+                request: request.request.replace(file.base, scaledFileName)
+              })
+              let parsed = resolver.parse(result.request)
+              let parsedResult = Object.assign({}, result, parsed)
+              resolver.doResolve('parsed-resolve', parsedResult, `found file: customized file`, callback)
+              return
+            }
           }
         }
+        
       } catch (err) {
         console.error(err)
       }
